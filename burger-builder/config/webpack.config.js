@@ -52,7 +52,7 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
-module.exports = function(webpackEnv) {
+module.exports = function (webpackEnv) {
     const isEnvDevelopment = webpackEnv === 'development';
     const isEnvProduction = webpackEnv === 'production';
 
@@ -91,8 +91,6 @@ module.exports = function(webpackEnv) {
             {
                 loader: require.resolve('css-loader'),
                 options: cssOptions,
-                modules: true,
-                localIdentName: '[name]__[local]_[hash:64:5]'
             },
             {
                 // Options for PostCSS as we reference these options twice
@@ -142,8 +140,8 @@ module.exports = function(webpackEnv) {
         bail: isEnvProduction,
         devtool: isEnvProduction ?
             shouldUseSourceMap ?
-            'source-map' :
-            false : isEnvDevelopment && 'cheap-module-source-map',
+                'source-map' :
+                false : isEnvDevelopment && 'cheap-module-source-map',
         // These are the "entry points" to our application.
         // This means they will be the "root" imports that are included in JS bundle.
         entry: [
@@ -185,9 +183,9 @@ module.exports = function(webpackEnv) {
             // Point sourcemap entries to original disk location (format as URL on Windows)
             devtoolModuleFilenameTemplate: isEnvProduction ?
                 info =>
-                path
-                .relative(paths.appSrc, info.absoluteResourcePath)
-                .replace(/\\/g, '/') : isEnvDevelopment &&
+                    path
+                        .relative(paths.appSrc, info.absoluteResourcePath)
+                        .replace(/\\/g, '/') : isEnvDevelopment &&
                 (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
             // Prevents conflicts when multiple Webpack runtimes (from different apps)
             // are used on the same page.
@@ -343,7 +341,7 @@ module.exports = function(webpackEnv) {
 
                         },
                         loader: require.resolve('eslint-loader'),
-                    }, ],
+                    },],
                     include: paths.appSrc,
                 },
                 {
@@ -434,6 +432,8 @@ module.exports = function(webpackEnv) {
                             use: getStyleLoaders({
                                 importLoaders: 1,
                                 sourceMap: isEnvProduction && shouldUseSourceMap,
+                                modules: true,
+                                localIdentName: '[name]__[local]_[hash:base64:5]',
                             }),
                             // Don't consider CSS imports dead code even if the
                             // containing package claims to have no side effects.
@@ -459,9 +459,9 @@ module.exports = function(webpackEnv) {
                             test: sassRegex,
                             exclude: sassModuleRegex,
                             use: getStyleLoaders({
-                                    importLoaders: 2,
-                                    sourceMap: isEnvProduction && shouldUseSourceMap,
-                                },
+                                importLoaders: 2,
+                                sourceMap: isEnvProduction && shouldUseSourceMap,
+                            },
                                 'sass-loader'
                             ),
                             // Don't consider CSS imports dead code even if the
@@ -475,11 +475,11 @@ module.exports = function(webpackEnv) {
                         {
                             test: sassModuleRegex,
                             use: getStyleLoaders({
-                                    importLoaders: 2,
-                                    sourceMap: isEnvProduction && shouldUseSourceMap,
-                                    modules: true,
-                                    getLocalIdent: getCSSModuleLocalIdent,
-                                },
+                                importLoaders: 2,
+                                sourceMap: isEnvProduction && shouldUseSourceMap,
+                                modules: true,
+                                getLocalIdent: getCSSModuleLocalIdent,
+                            },
                                 'sass-loader'
                             ),
                         },
@@ -509,9 +509,9 @@ module.exports = function(webpackEnv) {
             // Generates an `index.html` file with the <script> injected.
             new HtmlWebpackPlugin(
                 Object.assign({}, {
-                        inject: true,
-                        template: paths.appHtml,
-                    },
+                    inject: true,
+                    template: paths.appHtml,
+                },
                     isEnvProduction ? {
                         minify: {
                             removeComments: true,
@@ -526,7 +526,7 @@ module.exports = function(webpackEnv) {
                             minifyURLs: true,
                         },
                     } :
-                    undefined
+                        undefined
                 )
             ),
             // Inlines the webpack runtime script. This script is too small to warrant
