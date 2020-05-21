@@ -21,9 +21,9 @@ class App extends Component {
           <Route 
 		path="/posts" 
 		render={()=>(
-			<Suspense fallback={<div>Loading...</div}
+			<Suspense fallback={<div>Loading...</div}>
 				<Posts/>
-			</Suspese>
+			</Suspense>
 		)}
 	 />
         </React.Fragment>
