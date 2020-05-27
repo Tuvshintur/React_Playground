@@ -1,12 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import classes from './NavigationItems.css';
-import NavigationItem from './NavigationItem/NavigationItem';
+import classes from "./NavigationItems.css";
+import NavigationItem from "./NavigationItem/NavigationItem";
 
 const navigationItems = (props) => (
     <ul className={classes.NavigationItems}>
-        <NavigationItem exact link="/">BurgerBuilder</NavigationItem>
+        <NavigationItem exact link="/">
+            BurgerBuilder
+        </NavigationItem>
         <NavigationItem link="/orders">Orders</NavigationItem>
+        <NavigationItem link="/auth">Authenticate</NavigationItem>
     </ul>
 );
 
