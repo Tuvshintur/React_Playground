@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "../../../axios-orders";
 
+import { connect } from "react-redux";
+
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import classes from "./ContactData.css";
@@ -113,7 +115,7 @@ class ContactData extends Component {
             formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
         }
         const order = {
-            ingredients: this.props.ingredients,
+            ingredients: this.props.ings,
             price: this.props.price,
             orderData: formData,
         };
@@ -185,7 +187,17 @@ class ContactData extends Component {
         let form = (
             <form onSubmit={this.orderHandler}>
                 {formElementsArray.map((formElement) => (
-                    <Input key={formElement.id} elementType={formElement.config.elementType} elementConfig={formElement.config.elementConfig} value={formElement.config.value} invalid={!formElement.config.valid} shouldValidate={formElement.config.validation} errormessage={formElement.config.errormessage} touched={formElement.config.touched} changed={(event) => this.inputChangedHandler(event, formElement.id)} />
+                    <Input
+                        key={formElement.id}
+                        elementType={formElement.config.elementType}
+                        elementConfig={formElement.config.elementConfig}
+                        value={formElement.config.value}
+                        invalid={!formElement.config.valid}
+                        shouldValidate={formElement.config.validation}
+                        errormessage={formElement.config.errormessage}
+                        touched={formElement.config.touched}
+                        changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                    />
                 ))}
                 <Button btnType="Success" disabled={!this.state.formIsValid}>
                     ORDER
@@ -204,4 +216,11 @@ class ContactData extends Component {
     }
 }
 
-export default ContactData;
+const mapStateToProps = (state) => {
+    return {
+        ings: state.ingredients,
+        price: state.totalPrice,
+    };
+};
+
+export default connect(mapStateToProps)(ContactData);
